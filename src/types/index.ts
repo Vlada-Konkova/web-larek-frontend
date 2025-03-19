@@ -1,39 +1,51 @@
 // Интерфейс представления главной страницы
-interface IMain {
-  counter: number;
-  catalog: HTMLElement[];
-  locked: boolean;
+export interface IAppState {
+  counter: number; // счетчик у корзины
+  catalog: IProduct[]; // список товаров
+  basket: IProduct[]; // корзина
+  preview: string | null; // детальное описание товара
+  order: IOrder | null; // форма заказа
 }
 
-//определяем тип для категории товара
-type ProductCategory = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
-
 //Интерфейс для карточки товара
-interface IProduct {
+export interface IProduct {
   id: string;  //  идентификатор товара
   image: string;  // изображение товара
   title: string;  // наименование товара
-  category: ProductCategory;  // категория продукта
+  category: string;  // категория продукта
   price: number | null;  // цена товара
   description: string;  // описание товара
 }
 
-//Интерфейс для списка товаров на главной страницы
-interface IProductList {
-  productList: IProduct[];  // массив товаров
-}
-
 //Интерфейс для корзины
-interface IOrderBasket {
-  basketItems: IProduct[]; // массив товаров в корзине
+export interface IBasket {
+  basketItems: HTMLElement[]; // массив товаров в корзине
   totalPrice: number; // общая сумма заказа в корзине
 }
 
 //Интерфейс для заказа
-interface IOrderForm {
-  basket: IOrderBasket;  // выбранные товары(массив товаров)
-  paymentMethod: string;  // метод оплаты
-  address: string;  // адрес доставки
-  email: string;  // почта пользователя
-  phone: string;  // телефон пользователя
+export interface IOrder extends IOrderForm, IContactForm {
+	total: number;
+	items: string[];
 }
+
+// Интерфейс для формы заказа(способ оплаты, адрес)
+export interface IOrderForm {
+  payment: string; // способ оплаты
+  address: string; // адрес
+}
+
+// Интерфейс для формы контактов(почта и телефон)
+export interface IContactForm {
+  email: string; // почта
+  phone: string; // телефон
+}
+
+// Интерфейс для вывода успешной покупки
+export interface IOrderResult {
+  id: string; // идентификатор товара
+  total: number; // общая сумма заказа
+}
+
+// для ошибок
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
