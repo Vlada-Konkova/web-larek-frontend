@@ -50,7 +50,7 @@ export class Card extends Component<IProduct>{
 
   set category(value: string) {
     this.setText(this._category, value);
-    this._category.classList.add(categoryColors[value]);
+    this._category.className = `card__category ${categoryColors[value]}`;
   }
 
   get category(): string {

@@ -209,13 +209,13 @@ events.on('contacts:submit', () => {
  
   api.order(appData.order)
     .then((result) => {
+      appData.clearBasket();
+      page.counter = 0;
+      appData.counter = 0;
+      appData.clearForm();
       const success = new Success(cloneTemplate(successTemplate), {
         onClick: () => {
           modal.close();
-          appData.clearBasket();
-          page.counter = 0;
-          appData.counter = 0;
-          appData.clearForm();
         }
       });
       modal.render({
